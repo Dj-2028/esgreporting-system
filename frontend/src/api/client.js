@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore.js';
 
-const baseURL = import.meta.env.VITE_API_URL || '/api/v1';
+function resolveBaseUrl(rawUrl) {
+  if (!rawUrl) return '/api/v1';
+  const trimmed = String(rawUrl).trim().replace(/\/+$/, '');
+  if (!trimmed || trimmed === '/api/v1') return '/api/v1';
+  if (trimmed.endsWith('/api/v1')) return trimmed;
+  if (trimmed.endsWith('/api')) return `${trimmed}/v1`;
+  return `${trimmed}/api/v1`;
+}
+
+const baseURL = resolveBaseUrl(import.meta.env.VITE_API_URL);
 
 export const apiClient = axios.create({
   baseURL,

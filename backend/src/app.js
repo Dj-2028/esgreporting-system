@@ -38,10 +38,24 @@ function createApp() {
   );
 
   // Security headers (HSTS, nosniff, …) and strict CORS
+  const allowedOrigins = env.CLIENT_URL.split(',')
+    .map((u) => u.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+
   app.use(helmet());
   app.use(
     cors({
-      origin: env.CLIENT_URL,
+      origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        const normalized = origin.replace(/\/+$/, '');
+        if (
+          allowedOrigins.includes(normalized) ||
+          /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalized)
+        ) {
+          return callback(null, true);
+        }
+        return callback(null, false);
+      },
       credentials: true,
       exposedHeaders: ['X-Request-Id', 'Content-Disposition'],
     }),
