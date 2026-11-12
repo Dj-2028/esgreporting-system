@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: esg-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: COOKIE_SECURE
+        value: true
+      - key: STORAGE_DRIVER
+        value: local
+      - key: UPLOAD_DIR
+        value: ./uploads
+      - key: SMTP_HOST
+        value: localhost
+      - key: SMTP_PORT
+        value: 1025
+      - key: MAIL_FROM
+        value: ESG Platform <no-reply@esg.local>
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        sync: false
+      - key: JWT_REFRESH_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false

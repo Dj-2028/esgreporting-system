@@ -30,10 +30,16 @@ const refresh = asyncHandler(async (req, res) => {
   return ok(res, { access_token });
 });
 
+function getClearCookieOptions() {
+  const opts = { ...authService.getRefreshCookieOptions() };
+  delete opts.maxAge;
+  return opts;
+}
+
 const logout = asyncHandler(async (req, res) => {
   const raw = req.cookies ? req.cookies[authService.REFRESH_COOKIE_NAME] : null;
   await authService.logout(raw);
-  res.clearCookie(authService.REFRESH_COOKIE_NAME, { path: '/api/v1/auth' });
+  res.clearCookie(authService.REFRESH_COOKIE_NAME, getClearCookieOptions());
   return noContent(res);
 });
 
@@ -44,7 +50,7 @@ const me = asyncHandler(async (req, res) => {
 
 const changePassword = asyncHandler(async (req, res) => {
   await authService.changePassword(req.user._id, req.body);
-  res.clearCookie(authService.REFRESH_COOKIE_NAME, { path: '/api/v1/auth' });
+  res.clearCookie(authService.REFRESH_COOKIE_NAME, getClearCookieOptions());
   return noContent(res);
 });
 

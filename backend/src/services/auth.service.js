@@ -33,10 +33,11 @@ function parseDurationMs(ttl) {
 }
 
 function getRefreshCookieOptions() {
+  const secure = Boolean(env.COOKIE_SECURE);
   return {
     httpOnly: true,
-    sameSite: 'strict',
-    secure: Boolean(env.COOKIE_SECURE),
+    sameSite: secure ? 'none' : 'strict',
+    secure,
     path: '/api/v1/auth',
     maxAge: parseDurationMs(env.JWT_REFRESH_TTL),
   };

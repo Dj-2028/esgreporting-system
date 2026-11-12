@@ -1,8 +1,9 @@
 'use strict';
 
-const app = require('../backend/src/app');
+const { createApp } = require('../backend/src/app');
 const { connectDB, dbStatus } = require('../backend/src/config/db');
 
+const app = createApp();
 let connectionPromise = null;
 
 module.exports = async (req, res) => {
@@ -17,4 +18,3 @@ module.exports = async (req, res) => {
   }
   return app(req, res);
 };
-

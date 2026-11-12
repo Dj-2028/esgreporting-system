@@ -4,9 +4,9 @@
   "private": true,
   "description": "ESG Data Collection, Approval and Reporting Platform (MERN)",
   "scripts": {
+    "build": "npm --prefix frontend run build",
     "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
-    "test": "npm --prefix backend test && npm --prefix frontend test",
-    "prepare": "husky"
+    "test": "npm --prefix backend test && npm --prefix frontend test"
   },
   "lint-staged": {
     "backend/**/*.js": [
