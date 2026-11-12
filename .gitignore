@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+dist/
+coverage/
+uploads/
+.devdb/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+

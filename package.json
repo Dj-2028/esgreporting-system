@@ -1,0 +1,22 @@
+{
+  "name": "esg-management-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ESG Data Collection, Approval and Reporting Platform (MERN)",
+  "scripts": {
+    "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
+    "test": "npm --prefix backend test && npm --prefix frontend test",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "backend/**/*.js": [
+      "prettier --write",
+      "eslint --config backend/eslint.config.js"
+    ],
+    "frontend/src/**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint --config frontend/eslint.config.js"
+    ]
+  }
+}
+
